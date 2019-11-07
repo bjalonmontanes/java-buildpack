@@ -61,7 +61,7 @@ module JavaBuildpack
       private_constant :FILTER
 
       def agent_host_name
-        @application.details['application_uris'][0]
+        credentials['agent_host_name'] || @application.details['application_uris'][0]
       end
 
       def agent_jar

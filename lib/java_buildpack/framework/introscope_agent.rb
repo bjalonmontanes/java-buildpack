@@ -39,7 +39,7 @@ module JavaBuildpack
 
         java_opts
           .add_javaagent(agent_jar)
-          .add_system_property('com.wily.introscope.agentProfile', agent_profile)
+          .add_system_property('com.wily.introscope.agentProfile', agent_profile(credentials))
           .add_system_property('introscope.agent.hostName', agent_host_name(credentials))
           .add_system_property('com.wily.introscope.agent.agentName', agent_name(credentials))
           .add_system_property('introscope.agent.defaultProcessName', default_process_name(credentials))
@@ -95,8 +95,8 @@ module JavaBuildpack
         credentials['agent_name'] || @configuration['default_agent_name']
       end
 
-      def agent_profile
-        @droplet.sandbox + 'core/config/IntroscopeAgent.profile'
+      def agent_profile(credentials)
+        credentials['agent_profile'] || @droplet.sandbox + 'core/config/IntroscopeAgent.profile'
       end
 
       def default_process_name(credentials)

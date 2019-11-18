@@ -43,6 +43,7 @@ module JavaBuildpack
           .add_system_property('introscope.agent.hostName', agent_host_name(credentials))
           .add_system_property('com.wily.introscope.agent.agentName', agent_name(credentials))
           .add_system_property('introscope.agent.defaultProcessName', default_process_name(credentials))
+          .add_system_property('introscope.agent.customProcessName', custom_process_name(credentials))
 
         export_all_properties(credentials, java_opts)
       end
@@ -101,6 +102,10 @@ module JavaBuildpack
 
       def default_process_name(credentials)
         credentials['agent_default_process_name'] || @application.details['application_name']
+      end
+      
+      def custom_process_name(credentials)
+        credentials['agent_custom_process_name'] || default_process_name(credentials)
       end
 
       def protocol_mapping(protocol)
